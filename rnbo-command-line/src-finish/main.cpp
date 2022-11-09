@@ -18,9 +18,9 @@ int main(int argc, const char * argv[]) {
 
   // 2. Make a couple of buffers.
   uint32_t sampleBufferSize = 0;
-  float *sampleBuffer = nullptr;
+  double *sampleBuffer = nullptr;
   uint32_t sampleOffset = 0;
-  float *outputBuffer = nullptr;
+  double *outputBuffer = nullptr;
 
   // 3. Read in the input file.
   SF_INFO inputInfo, outputInfo;
@@ -35,12 +35,12 @@ int main(int argc, const char * argv[]) {
   // it's fine for a teaching example
   // Make space to store the file
   if (sf && sf_out) {
-    sampleBufferSize = sizeof(float) * inputInfo.frames * inputInfo.channels;
-    sampleBuffer = (float *) malloc(sampleBufferSize);
-    outputBuffer = (float *) malloc(blocksize * sizeof(float));
+    sampleBufferSize = sizeof(double) * inputInfo.frames * inputInfo.channels;
+    sampleBuffer = (double *) malloc(sampleBufferSize);
+    outputBuffer = (double *) malloc(blocksize * sizeof(double));
 
     std::cout << "--- Trying to read " << sampleBufferSize << " bytes" << "\n";
-    int readSamples = sf_read_float(sf, (float *) sampleBuffer, sampleBufferSize);
+    int readSamples = sf_read_double(sf, (double *) sampleBuffer, sampleBufferSize);
     std::cout << "--- Success: Read " << readSamples << " samples" << "\n";
 
     sf_close(sf);
@@ -59,7 +59,7 @@ int main(int argc, const char * argv[]) {
     outputs[0] = new double[blocksize];
 
     // 8. Do all of the audio processing
-    for (uint32_t i = 0; i < sampleBufferSize / (sizeof(float)); i += (blocksize)) {
+    for (uint32_t i = 0; i < sampleBufferSize / (sizeof(double)); i += (blocksize)) {
 
       // 9. Read into your input buffers, remembering that the input is interleaved
       for (uint32_t j = 0; j < blocksize; j++) {
@@ -70,7 +70,7 @@ int main(int argc, const char * argv[]) {
       rnboObject.process(inputs, 1, outputs, 1, blocksize);
 
       // 11. Ship that buffer to the output file
-      sf_writef_float(sf_out, outputs[0], blocksize);
+      sf_writef_double(sf_out, outputs[0], blocksize);
     }
 
     // 12. Cleanup

@@ -24,7 +24,7 @@ target_include_directories(RNBOCommandLine PUBLIC libsndfile-1.0.28/src)
 set(EXTRA_LIBS ${CORE_FOUNDATION} ${APPLICATION_SERVICES} ${CORE_SERVICES})
 
 # include the RNBO headers
-target_include_directories(RNBOCommandLine PRIVATE rnbo rnbo/common)
+target_include_directories(RNBOCommandLine PRIVATE export/rnbo export/rnbo/common)
 
 # Copy the executable up one level
 add_custom_command(TARGET RNBOCommandLine 
