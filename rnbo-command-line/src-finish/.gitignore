@@ -1,9 +1,10 @@
 libsndfile-1.0.28
 build
-rnbo
-anton-out.aif
-dependencies.json
-am-mod.cpp
-description.json
-presets.json
+cherokee-out.aif
 RNBOCommandLine
+export/rnbo
+export/dependencies.json
+export/am-mod.cpp
+export/description.json
+export/presets.json
+

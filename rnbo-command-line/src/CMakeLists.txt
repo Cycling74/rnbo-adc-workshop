@@ -7,7 +7,7 @@ set (CMAKE_CXX_STANDARD 11)
 project(RNBOCommandLine)
 
 # add the main executable as well as the RNBO sources
-add_executable(RNBOCommandLine main.cpp am-mod.cpp rnbo/RNBO.cpp)
+add_executable(RNBOCommandLine main.cpp export/am-mod.cpp export/rnbo/RNBO.cpp)
 
 # add a preprocessor macro to disable the convenience definition of the global patcher factory
 # target_compile_definitions(RNBOCommandLine PRIVATE RNBO_NO_PATCHERFACTORY)
