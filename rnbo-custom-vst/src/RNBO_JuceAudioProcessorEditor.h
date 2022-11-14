@@ -17,7 +17,12 @@
 namespace RNBO {
 
 	//==============================================================================
-	class RNBOAudioProcessorEditor : public AudioProcessorEditor, public AsyncUpdater, public RNBO::EventHandler
+	class RNBOAudioProcessorEditor :
+		public AudioProcessorEditor,
+		public AsyncUpdater,
+		public RNBO::EventHandler,
+		public juce::Slider::Listener,
+		public juce::AudioProcessorListener
 	{
 	public:
 		//==============================================================================
@@ -38,6 +43,11 @@ namespace RNBO {
 		//==============================================================================
 		CoreObject&								_rnboObject;
 		ParameterEventInterfaceUniquePtr		_parameterInterface;
+
+		juce::Slider							overblowSlider;
+		juce::Slider							harmonicsSlider;
+		ParameterIndex							overblowParamIndex;
+		ParameterIndex							harmonicsParamIndex;
 	};
 
 } // namespace RNBO

@@ -23,19 +23,22 @@ RNBOAudioProcessorEditor::RNBOAudioProcessorEditor(AudioProcessor* const p, Core
 	p->addListener(this);
 
 	addAndMakeVisible (overblowSlider);
-	overblowSlider.setRange (0.1, 5.0);
 	overblowSlider.addListener (this);
 
 	addAndMakeVisible (harmonicsSlider);
-	harmonicsSlider.setRange (0.1, 10.0);
 	harmonicsSlider.addListener (this);
 
+	ParameterInfo paramInfo;
 	for (ParameterIndex i = 0; i < _rnboObject.getNumParameters(); i++) {
 		ConstCharPointer pid = _rnboObject.getParameterId(i);
 		if (strcmp(pid, "harmonics") == 0) {
 			harmonicsParamIndex = i;
+			_rnboObject.getParameterInfo(i, &paramInfo);
+			harmonicsSlider.setRange(paramInfo.min, paramInfo.max);
 		} else if (strcmp(pid, "overblow") == 0) {
 			overblowParamIndex = i;
+			_rnboObject.getParameterInfo(i, &paramInfo);
+			overblowSlider.setRange(paramInfo.min, paramInfo.max);
 		}
 	}
 
@@ -86,14 +89,18 @@ void RNBOAudioProcessorEditor::resized()
 void RNBOAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
 {
 	juce::AudioProcessorParameter *param = nullptr;
-	auto value = jmap(slider->getValue(), slider->getMinimum(), slider->getMaximum(), 0.0, 1.0);
+	int index = -1;
+	double value = 0.0;
 	if (slider == &overblowSlider) {
+		index = overblowParamIndex;
 		param = processor.getParameters()[overblowParamIndex];
 	} else if (slider == &harmonicsSlider) {
+		index = harmonicsParamIndex;
 		param = processor.getParameters()[harmonicsParamIndex];
 	}
 
-	if (param) {
+	if (param && index >= 0) {
+		value = _rnboObject.convertToNormalizedParameterValue(index, slider->getValue());
 		param->beginChangeGesture();
 		param->setValueNotifyingHost(value);
 		param->endChangeGesture();
@@ -112,7 +119,8 @@ void RNBOAudioProcessorEditor::audioProcessorParameterChanged (AudioProcessor*, 
 	}
 
 	if (slider != nullptr) {
-		slider->setValue(jmap((double) value, slider->getMinimum(), slider->getMaximum()), juce::dontSendNotification);
+		double trueValue = _rnboObject.convertFromNormalizedParameterValue(parameterIndex, value);
+		slider->setValue(trueValue, juce::dontSendNotification);
 
 		ParameterValue hv = _rnboObject.getParameterNormalized(harmonicsParamIndex);
 		ParameterValue ov = 1.0 - _rnboObject.getParameterNormalized(overblowParamIndex); // invert
