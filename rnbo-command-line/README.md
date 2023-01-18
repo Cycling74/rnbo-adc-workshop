@@ -5,23 +5,10 @@ really hacked together, and only intended to be used for demonstration.
 
 ## Dependencies
 
-First and foremost, you'll need RNBO and CMake.
-
-You'll also need `libsndfile` for file I/O, available here http://www.mega-nerd.com/libsndfile.
-I am not currently smart enough to figure out how to make this work in a nice and clean way
-with CMake. If you are a smart and generous person, please don't hesitate to help me 
-understand how to make this dependency less clunky. In the meantime, just download libsndfile
-and configure/make it locally.
-
-```
-cd src
-curl -o libsndfile.tar.gz http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz
-tar -xf libsndfile.tar.gz
-rm -rf libsndfile.tar.gz
-cd libsndfile-1.0.28 && ./configure && make
-```
-
-You'll only need to do this one time, of course, so that the library is available.
+First and foremost, you'll need RNBO and CMake. This code also depends on a 
+third party library called libsndfile, and huge thanks to @rmpowell77 for adding
+that dependency to CMakeLists so that we don't have to download and build it as
+a separate step. So if you've got RNBO and CMake you can skip ahead to Directions.
 
 ## Directions
 
