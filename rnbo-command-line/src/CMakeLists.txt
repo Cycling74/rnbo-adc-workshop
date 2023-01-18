@@ -18,8 +18,16 @@ find_library(APPLICATION_SERVICES ApplicationServices)
 find_library(CORE_SERVICES CoreServices)
 
 # include the headers and library files for sndlib, to decode wav
-target_link_libraries(RNBOCommandLine PUBLIC ${CMAKE_SOURCE_DIR}/libsndfile-1.0.28/src/.libs/libsndfile.a)
-target_include_directories(RNBOCommandLine PUBLIC libsndfile-1.0.28/src)
+include(FetchContent)
+
+FetchContent_Declare(
+  libsndfile
+  GIT_REPOSITORY https://github.com/libsndfile/libsndfile
+  GIT_TAG        ea3ac90e98c6a98cd52cae39010446fba368a2e3
+)
+FetchContent_MakeAvailable(libsndfile)
+
+target_link_libraries(RNBOCommandLine PUBLIC SndFile::sndfile)
 
 set(EXTRA_LIBS ${CORE_FOUNDATION} ${APPLICATION_SERVICES} ${CORE_SERVICES})
 
