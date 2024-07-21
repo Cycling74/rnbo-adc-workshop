@@ -75,8 +75,12 @@ async function setup() {
     const splitter = context.createChannelSplitter(3);
 
     // Connect the device to the web audio graph
-    inputNode.connect(device.node);
-    device.node.connect(splitter);
+    // inputNode.connect(device.node);
+    // device.node.connect(splitter);
+
+    // Uncomment to bypass RNBO
+    inputNode.connect(splitter, 0, 0);
+
     splitter.connect(outputNode, 0, 0);
     splitter.connect(analyzerNodeLeft, 1, 0);
     splitter.connect(analyzerNodeRight, 2, 0);

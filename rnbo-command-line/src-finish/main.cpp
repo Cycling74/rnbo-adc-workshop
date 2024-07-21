@@ -48,6 +48,9 @@ int main(int argc, const char * argv[]) {
     std::cout << "--- Failed" << "\n";
   }
 
+  int parameterIndex = rnboObject.getParameterIndexForID("transp");
+  rnboObject.setParameterValue(parameterIndex, 7, rnboObject.getCurrentTime());
+
   // 6. Get ready to process stereo audio in blocksize-sample chunks
   if (sampleBuffer) {
 
