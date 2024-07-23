@@ -7,6 +7,16 @@ This example showes how to use RNBO in a custom web app.
 You're going to need node + npm for this one. As usual, I recommend 
 installing these using nvm.
 
+## Running the final output
+
+If you want to skip ahead and just see the thing working, simply:
+
+```
+npx http-server
+```
+
+from this directory. The page should be visible at localhost:8080 or localhost:8081, check the terimal output to see which one.
+
 ## Directions
 
 As usual, the `src` directory contains the final version of all modified source
